@@ -13,9 +13,11 @@ import javafx.stage.Stage;
 public class App extends Application {
 
     private static Scene scene;
-    public static Stage stageMain;
+    @SuppressWarnings("exports")
+	public static Stage stageMain;
 
-    @Override
+    @SuppressWarnings("exports")
+	@Override
     public void start(Stage stage) throws IOException {
     	stageMain = stage;
     	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("main.fxml"));

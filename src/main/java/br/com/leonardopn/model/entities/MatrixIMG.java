@@ -32,34 +32,33 @@ public class MatrixIMG {
 		return this.imgMatrix;
 	}
 
-	public ArrayList<Histograma> getHistograma() {
-		Map<Integer, Histograma> histogramas = new HashMap<Integer, Histograma>();
-
-		for (int i = 0; i < this.img.getWidth(); ++i) {
-			for (int j = 0; j < this.img.getHeight(); ++j) {
-				int valor = this.imgMatrix[j][j];
-				if (histogramas.containsKey(valor)) {
-					histogramas.get(valor).quant++;
-				} else {
-					histogramas.put(valor, new Histograma(valor));
+	public ArrayList<QuantForHistograma> getHistograma() {
+		try {
+			Map<Integer, QuantForHistograma> histogramas = new HashMap<Integer, QuantForHistograma>();
+			for (int i = 0; i < this.img.getWidth(); ++i) {
+				for (int j = 0; j < this.img.getHeight(); ++j) {
+					int valor = this.imgMatrix[i][j];
+					if (histogramas.containsKey(valor)) {
+						histogramas.get(valor).quant++;
+					} else {
+						histogramas.put(valor, new QuantForHistograma(valor));
+					}
 				}
 			}
+			ArrayList<QuantForHistograma> histogramaArrayList = new ArrayList<QuantForHistograma>(histogramas.values());
+			Collections.sort(histogramaArrayList);
+			return histogramaArrayList;
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		ArrayList<Histograma> histogramaArrayList = new ArrayList<Histograma>(histogramas.values());
-		Collections.sort(histogramaArrayList);
-		int somador = 0;
-		for (Histograma his : histogramaArrayList) {
-			somador += his.quant;
-		}
-
-		return histogramaArrayList;
+		return null;
 	}
 
-	public int getLimiar(ArrayList<Histograma> histogramas) {
+	public int getLimiar(ArrayList<QuantForHistograma> histogramas) {
 		int limiar = 5000000;
 		int histEscolhido = histogramas.indexOf(histogramas.get(0));
 
-		for (Histograma his : histogramas) {
+		for (QuantForHistograma his : histogramas) {
 			int somador = 0;
 			int somador2 = 0;
 
@@ -76,6 +75,8 @@ public class MatrixIMG {
 				histEscolhido = his.valor;
 			}
 		}
+
+		System.out.println("Limiar encontrado: " + histEscolhido);
 		return histEscolhido;
 	}
 
@@ -95,7 +96,6 @@ public class MatrixIMG {
 				}
 			}
 		}
-
 		return imagem;
 	}
 }

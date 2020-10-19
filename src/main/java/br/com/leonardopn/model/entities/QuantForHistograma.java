@@ -1,10 +1,10 @@
 package br.com.leonardopn.model.entities;
 
-public class Histograma implements Comparable<Histograma>{
+public class QuantForHistograma implements Comparable<QuantForHistograma>{
 	public Integer valor;
 	public Integer quant;
 	
-	public Histograma(int valor) {
+	public QuantForHistograma(int valor) {
 		this.valor = valor;
 		this.quant = 1;
 	}
@@ -25,7 +25,7 @@ public class Histograma implements Comparable<Histograma>{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Histograma other = (Histograma) obj;
+		QuantForHistograma other = (QuantForHistograma) obj;
 		if (valor != other.valor)
 			return false;
 		return true;
@@ -36,7 +36,7 @@ public class Histograma implements Comparable<Histograma>{
 		return "[valor: " + valor + ", quant:" + quant + "]";
 	}
 
-	public int compareTo(Histograma histograma) {
+	public int compareTo(QuantForHistograma histograma) {
 		return (int)(this.valor - histograma.valor);
 	}
 }

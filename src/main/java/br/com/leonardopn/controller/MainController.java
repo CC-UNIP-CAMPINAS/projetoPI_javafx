@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 
 import br.com.leonardopn.App;
 import br.com.leonardopn.model.entities.EscalaDeCinza;
-import br.com.leonardopn.model.entities.Histograma;
+import br.com.leonardopn.model.entities.QuantForHistograma;
 import br.com.leonardopn.model.entities.MatrixIMG;
 import javafx.application.Platform;
 import javafx.concurrent.Task;
@@ -68,9 +68,13 @@ public class MainController implements Initializable {
 			File selectedFile = fileChooser.showOpenDialog(App.stageMain);
 			if (selectedFile.exists() && selectedFile != null) {
 				BufferedImage imgNormal = ImageIO.read(selectedFile);
+				System.out.println("1: " +imgNormal);
 				EscalaDeCinza filterCinza = new EscalaDeCinza();
+				System.out.println("2: " +filterCinza);
 				BufferedImage imgCinzaBuff = filterCinza.getImgGray(imgNormal);
+				System.out.println("3: " +imgCinzaBuff);
 				Image imageCinzaFX = SwingFXUtils.toFXImage(imgCinzaBuff, null);
+				System.out.println("4: " +imageCinzaFX);
 
 				imgCinza.setImage(imageCinzaFX);
 
@@ -79,15 +83,13 @@ public class MainController implements Initializable {
 					protected Void call() throws Exception {
 
 						MatrixIMG imgMatrixCinza = new MatrixIMG(imgCinzaBuff);
-						imgMatrixCinza.getMatrix();
+						System.out.println("5: " +imgMatrixCinza.getMatrix());
 
-						ArrayList<Histograma> histogramas = imgMatrixCinza.getHistograma();
+						ArrayList<QuantForHistograma> histogramas = imgMatrixCinza.getHistograma();
 						int limiar = imgMatrixCinza.getLimiar(histogramas);
-						System.out.println(limiar);
 
 						BufferedImage imgBinarizada = imgMatrixCinza.binarizador(limiar);
 						Image imgBinarizadaFX = SwingFXUtils.toFXImage(imgBinarizada, null);
-
 
 						Platform.runLater(() -> {
 							ImgBinarizada.setImage(imgBinarizadaFX);
@@ -106,11 +108,12 @@ public class MainController implements Initializable {
 		}
 	}
 
-	public void preencheHistograma(ArrayList<Histograma> histogramas) {
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public void preencheHistograma(ArrayList<QuantForHistograma> histogramas) {
 
 		XYChart.Series<Integer, Integer> series = new XYChart.Series<>();
 
-		for (Histograma his : histogramas) {
+		for (QuantForHistograma his : histogramas) {
 			series.getData().add(new XYChart.Data(String.valueOf(his.valor), his.quant));
 		}
 
