@@ -69,7 +69,7 @@ public class MatrixIMG {
 				somador2 += histogramas.get(i).quant;
 
 			}
-			System.out.println(histogramas.indexOf(his) + "" + his + "-" + somador + "=" + somador2);
+			System.out.println(histogramas.indexOf(his) + "" + his + "-" + somador + "<=>" + somador2);
 			if (Math.abs((somador - somador2)) <= limiar) {
 				limiar = Math.abs((somador - somador2));
 				histEscolhido = his.valor;

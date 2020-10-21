@@ -64,17 +64,15 @@ public class MainController implements Initializable {
 	public void buscaArquivo() {
 		try {
 			barChartHistograma.getData().clear();
+			FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Images File", "*.png", "*.jpg", "*.tiff");
 			FileChooser fileChooser = new FileChooser();
+			fileChooser.getExtensionFilters().add(extFilter);
 			File selectedFile = fileChooser.showOpenDialog(App.stageMain);
 			if (selectedFile.exists() && selectedFile != null) {
 				BufferedImage imgNormal = ImageIO.read(selectedFile);
-				System.out.println("1: " +imgNormal);
 				EscalaDeCinza filterCinza = new EscalaDeCinza();
-				System.out.println("2: " +filterCinza);
 				BufferedImage imgCinzaBuff = filterCinza.getImgGray(imgNormal);
-				System.out.println("3: " +imgCinzaBuff);
 				Image imageCinzaFX = SwingFXUtils.toFXImage(imgCinzaBuff, null);
-				System.out.println("4: " +imageCinzaFX);
 
 				imgCinza.setImage(imageCinzaFX);
 
@@ -83,7 +81,7 @@ public class MainController implements Initializable {
 					protected Void call() throws Exception {
 
 						MatrixIMG imgMatrixCinza = new MatrixIMG(imgCinzaBuff);
-						System.out.println("5: " +imgMatrixCinza.getMatrix());
+						imgMatrixCinza.getMatrix();
 
 						ArrayList<QuantForHistograma> histogramas = imgMatrixCinza.getHistograma();
 						int limiar = imgMatrixCinza.getLimiar(histogramas);
